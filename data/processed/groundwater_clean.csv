@@ -1,0 +1,618 @@
+state,district,net_gw_availability_ham,net_gw_irrigation_ham,stage_pct,category
+Andhra Pradesh,Guntur,155359.0,98221.0,36.0,Safe
+Andhra Pradesh,Vizianagaram,144156.0,38123.0,79.0,Semi-Critical
+Andhra Pradesh,Visakhapatnam,168366.0,47361.0,71.0,Semi-Critical
+Andhra Pradesh,East Godavari,146879.0,101056.0,25.0,Safe
+Andhra Pradesh,Srikakulam,180577.0,137823.0,19.0,Safe
+Andhra Pradesh,Nellore,115361.0,44229.0,59.0,Safe
+Andhra Pradesh,Kurnool,177279.0,60269.0,64.0,Safe
+Andhra Pradesh,Prakasam,202389.0,139986.0,29.0,Safe
+Andhra Pradesh,Khammam,164969.0,105226.0,36.0,Safe
+Andhra Pradesh,Adilabad,137725.0,89853.0,28.0,Safe
+Andhra Pradesh,Krishna,118668.0,24967.0,83.0,Semi-Critical
+Andhra Pradesh,West Godavari,163341.0,81635.0,45.0,Safe
+Andhra Pradesh,Mehaboobnagar,190929.0,76000.0,59.0,Safe
+Andhra Pradesh,Kadapa,246888.0,140287.0,27.0,Safe
+Andhra Pradesh,Nalgonda,120367.0,34153.0,69.0,Safe
+Andhra Pradesh,Warangal,161414.0,112453.0,28.0,Safe
+Andhra Pradesh,Karimnagar,64346.0,18452.0,70.0,Semi-Critical
+Andhra Pradesh,Nizamabad,100213.0,69867.0,25.0,Safe
+Andhra Pradesh,Rangareddy,84484.0,58753.0,22.0,Safe
+Andhra Pradesh,Chittoor,90047.0,67213.0,19.0,Safe
+Andhra Pradesh,Anantapur,175768.0,62290.0,62.0,Safe
+Andhra Pradesh,Medak,147200.0,88338.0,36.0,Safe
+Arunachal Pradesh,Tirap,9900.0,9855.0,0.03,Safe
+Arunachal Pradesh,Changlang,25226.0,25142.0,0.1,Safe
+Arunachal Pradesh,Lohit,175824.0,175717.0,0.0,Safe
+Arunachal Pradesh,Anjaw,0.0,0.0,0.0,Safe
+Arunachal Pradesh,Dibang Valley,0.0,0.0,0.0,Safe
+Arunachal Pradesh,Lower Dibang Valley,91001.0,90864.0,0.04,Safe
+Arunachal Pradesh,East Siang,66732.0,66603.0,0.19,Safe
+Arunachal Pradesh,West Siang,5489.0,5471.0,0.0,Safe
+Arunachal Pradesh,Upper Siang,0.0,,0.0,Safe
+Arunachal Pradesh,East Kameng,14726.0,14640.0,0.1,Safe
+Arunachal Pradesh,West Kameng,2116.0,2097.0,0.0,Safe
+Arunachal Pradesh,Lower Subansiri,2307.0,2211.0,0.22,Safe
+Arunachal Pradesh,Upper Subansiri,299.0,299.0,0.0,Safe
+Arunachal Pradesh,Papum Pare,12031.0,11900.0,0.94,Safe
+Arunachal Pradesh,Tawang,0.0,,0.0,Safe
+Arunachal Pradesh,Kurung Kumey,0.0,0.0,0.0,Safe
+Assam,Barpeta,82105.0,41555.0,48.0,Safe
+Assam,Bongaigaon,81370.0,66187.0,18.0,Safe
+Assam,Cachar,78554.0,73996.0,5.0,Safe
+Assam,Darrang,82117.0,60039.0,26.0,Safe
+Assam,Dibrugarh,140696.0,123559.0,12.0,Safe
+Assam,Dhemaji,166612.0,160665.0,3.0,Safe
+Assam,Dhubri,113773.0,60431.0,46.0,Safe
+Assam,Golaghat,126661.0,118974.0,6.0,Safe
+Assam,Goalpara,103615.0,86366.0,16.0,Safe
+Assam,Hailakandi,23660.0,21903.0,6.0,Safe
+Assam,Jorhat,133198.0,124316.0,7.0,Safe
+Assam,Kamrup,118627.0,90172.0,23.0,Safe
+Assam,Karbi Anglong,34046.0,31465.0,6.0,Safe
+Assam,Kokrajhar,143626.0,137730.0,4.0,Safe
+Assam,Karimganj,42542.0,39192.0,6.0,Safe
+Assam,Lakhimpur,117537.0,111177.0,5.0,Safe
+Assam,Morigaon,65643.0,48429.0,25.0,Safe
+Assam,Nagaon,173425.0,132072.0,23.0,Safe
+Assam,N.C. Hills,3416.0,2906.0,13.0,Safe
+Assam,Nalbari,34656.0,20534.0,40.0,Safe
+Assam,Sibsagar,128812.0,119054.0,7.0,Safe
+Assam,Sonitpur,177627.0,166301.0,6.0,Safe
+Assam,Tinsukia,159247.0,148357.0,7.0,Safe
+Assam,Baksa,67328.0,63726.0,5.0,Safe
+Assam,Kamrup Metro,22130.0,17012.0,22.0,Safe
+Assam,Udalguri,69615.0,63609.0,8.0,Safe
+Assam,Chirang,87896.0,84472.0,4.0,Safe
+Bihar,Araria,80819.0,51681.0,34.0,Safe
+Bihar,Arwal,21237.0,10107.0,50.0,Safe
+Bihar,Aurangabad,94371.0,69825.0,24.0,Safe
+Bihar,Banka,43399.0,26078.0,37.0,Safe
+Bihar,Begusarai,60624.0,19944.0,62.0,Safe
+Bihar,Bhabhua,79436.0,52150.0,32.0,Safe
+Bihar,Bhagalpur,70599.0,44537.0,34.0,Safe
+Bihar,Bhojpur,79295.0,42281.0,45.0,Safe
+Bihar,Buxar,59466.0,36904.0,36.0,Safe
+Bihar,Darbhanga,60405.0,24367.0,52.0,Safe
+Bihar,E.Champaran,129212.0,70709.0,42.0,Safe
+Bihar,Gaya,105333.0,49073.0,49.0,Safe
+Bihar,Gopalganj,64669.0,25196.0,58.0,Safe
+Bihar,Jamui,40311.0,23170.0,39.0,Safe
+Bihar,Jehanabad,30087.0,9805.0,65.0,Safe
+Bihar,Katihar,89233.0,37670.0,55.0,Safe
+Bihar,Khagaria,54162.0,28039.0,46.0,Safe
+Bihar,Kishanganj,72566.0,50837.0,28.0,Safe
+Bihar,Lakhisarai,28345.0,15809.0,43.0,Safe
+Bihar,Madhepura,52709.0,20988.0,57.0,Safe
+Bihar,Madhubani,105184.0,66345.0,34.0,Safe
+Bihar,Munger,31178.0,21271.0,29.0,Safe
+Bihar,Muzaffarpur,109347.0,45140.0,56.0,Safe
+Bihar,Nalanda,66699.0,22041.0,66.0,Safe
+Bihar,Nawada,53961.0,28604.0,43.0,Safe
+Bihar,Patna,99053.0,40421.0,55.0,Safe
+Bihar,Purnea,91253.0,46317.0,47.0,Safe
+Bihar,Rohtas,113206.0,70678.0,35.0,Safe
+Bihar,Saharsa,56439.0,33140.0,38.0,Safe
+Bihar,Samastipur,87518.0,37428.0,53.0,Safe
+Bihar,Saran,80871.0,32917.0,56.0,Safe
+Bihar,Sheikhpura,16604.0,7405.0,54.0,Safe
+Bihar,Sheohar,17325.0,6178.0,60.0,Safe
+Bihar,Sitamarhi,77653.0,39023.0,46.0,Safe
+Bihar,Siwan,75014.0,28724.0,59.0,Safe
+Bihar,Supaul,74195.0,45608.0,36.0,Safe
+Bihar,Vaishali,72160.0,28687.0,57.0,Safe
+Bihar,West Champaran,142518.0,101339.0,27.0,Safe
+Chhattisgarh,Baster,93139.0,80508.0,13.0,Safe
+Chhattisgarh,Bijapur,77801.0,76276.0,2.0,Safe
+Chhattisgarh,Bilaspur,60948.0,30530.0,47.0,Safe
+Chhattisgarh,Dantewara,50119.0,46674.0,6.0,Safe
+Chhattisgarh,Dhamtari,46163.0,9254.0,78.0,Semi-Critical
+Chhattisgarh,Durg,82013.0,24472.0,69.0,Safe
+Chhattisgarh,Janjgir Champa,36770.0,20459.0,42.0,Safe
+Chhattisgarh,Jashpur,47418.0,30548.0,35.0,Safe
+Chhattisgarh,Kanker,85481.0,66978.0,21.0,Safe
+Chhattisgarh,Kawardha,34281.0,11224.0,66.0,Safe
+Chhattisgarh,Korba,46285.0,30945.0,32.0,Safe
+Chhattisgarh,Koriya,50954.0,39000.0,23.0,Safe
+Chhattisgarh,Mahasamund,59813.0,30518.0,47.0,Safe
+Chhattisgarh,Narayanpur,28759.0,27738.0,3.0,Safe
+Chhattisgarh,Raigarh,40278.0,18087.0,53.0,Safe
+Chhattisgarh,Raipur,115768.0,64634.0,43.0,Safe
+Chhattisgarh,Rajnandgaon,43092.0,18084.0,58.0,Safe
+Chhattisgarh,Surguja,163702.0,118049.0,27.0,Safe
+Delhi,Darya Ganj,234.0,34.0,59.0,Safe
+Delhi,Karol Bagh,40.0,0.0,137.0,Over-Exploited
+Delhi,Pahar Ganj,72.0,0.0,137.0,Over-Exploited
+Delhi,Gandhi Nagar,357.0,3.0,80.0,Semi-Critical
+Delhi,Preet Vihar,604.0,0.0,243.0,Over-Exploited
+Delhi,Vivek Vihar,227.0,0.0,164.0,Over-Exploited
+Delhi,Chanakay Puri,353.0,0.0,96.0,Critical
+Delhi,Connaught Place,189.0,24.0,79.0,Semi-Critical
+Delhi,Parliament Street,175.0,0.0,91.0,Critical
+Delhi,Civil Lines,1223.0,401.0,62.0,Safe
+Delhi,Kotwali,128.0,0.0,118.0,Over-Exploited
+Delhi,Sadar Bazar,49.0,0.0,110.0,Over-Exploited
+Delhi,Seelam Pur,873.0,0.0,85.0,Semi-Critical
+Delhi,Seema Puri,120.0,0.0,223.0,Over-Exploited
+Delhi,Shahdra,143.0,0.0,201.0,Over-Exploited
+Delhi,Model Town,476.0,0.0,178.0,Over-Exploited
+Delhi,Narela,4859.0,872.0,77.0,Semi-Critical
+Delhi,Saraswati Vihar,2689.0,0.0,165.0,Over-Exploited
+Delhi,Defence Colony,1035.0,0.0,130.0,Over-Exploited
+Delhi,Hauz Khas,1523.0,0.0,234.0,Over-Exploited
+Delhi,Kalkaji,1565.0,0.0,200.0,Over-Exploited
+Delhi,Delhi Cantonment,803.0,0.0,230.0,Over-Exploited
+Delhi,Najafgarh,6661.0,0.0,126.0,Over-Exploited
+Delhi,Vasant Vihar,1663.0,0.0,153.0,Over-Exploited
+Delhi,Patel Nagar,1014.0,0.0,192.0,Over-Exploited
+Delhi,Panjabi Bagh,1307.0,0.0,93.0,Critical
+Delhi,Rajouri Garden,331.0,0.0,269.0,Over-Exploited
+Goa,North Goa,8554.0,5610.0,30.0,Safe
+Goa,South Goa,5989.0,4079.0,26.0,Safe
+Gujarat,Ahmedabad,58309.0,12740.0,78.0,Semi-Critical
+Gujarat,Amreli,76794.0,26488.0,64.0,Safe
+Gujarat,Anand,74340.0,33576.0,52.0,Safe
+Gujarat,Banaskantha,107787.0,5917.0,107.0,Over-Exploited
+Gujarat,Bharuch,38870.0,19710.0,47.0,Safe
+Gujarat,Bhavnagar,89566.0,30271.0,64.0,Safe
+Gujarat,Dang,8648.0,6988.0,17.0,Safe
+Gujarat,Dohad,35392.0,16588.0,50.0,Safe
+Gujarat,Gandhinagar,45300.0,0.0,120.0,Over-Exploited
+Gujarat,Jamnagar,85513.0,29068.0,64.0,Safe
+Gujarat,Junagadh,130366.0,47807.0,62.0,Safe
+Gujarat,Kachchh,79621.0,15855.0,79.0,Semi-Critical
+Gujarat,Kheda,74011.0,24805.0,64.0,Safe
+Gujarat,Mahesana,83624.0,423.0,116.0,Over-Exploited
+Gujarat,Narmada,21494.0,14583.0,30.0,Safe
+Gujarat,Navsari,38518.0,19153.0,48.0,Safe
+Gujarat,Panchmahals,70242.0,39666.0,41.0,Safe
+Gujarat,Patan,25258.0,0.0,122.0,Over-Exploited
+Gujarat,Porbandar,19705.0,4809.0,72.0,Semi-Critical
+Gujarat,Rajkot,145183.0,47790.0,65.0,Safe
+Gujarat,Sabarkantha,118637.0,30259.0,73.0,Semi-Critical
+Gujarat,Surat,81352.0,42816.0,45.0,Safe
+Gujarat,Surendranagar,62987.0,24490.0,60.0,Safe
+Gujarat,Tapi,33701.0,22243.0,33.0,Safe
+Gujarat,Vadodara,119682.0,52515.0,54.0,Safe
+Gujarat,Valsad,33640.0,18541.0,42.0,Safe
+Haryana,Ambala,53252.0,5975.0,86.0,Semi-Critical
+Haryana,Panchkula,13918.0,1135.0,81.0,Semi-Critical
+Haryana,Fatehabad,52992.0,-39477.0,174.0,Over-Exploited
+Haryana,Bhiwani,61857.0,-9571.0,115.0,Over-Exploited
+Haryana,Hissar,62320.0,3914.0,94.0,Critical
+Haryana,Gurgaon,24048.0,-30370.0,226.0,Over-Exploited
+Haryana,Mewat,22364.0,3023.0,84.0,Semi-Critical
+Haryana,Faridabad,19564.0,4140.0,76.0,Semi-Critical
+Haryana,Palwal,42907.0,1000.0,97.0,Critical
+Haryana,Jhajjar,41238.0,131.0,100.0,Critical
+Haryana,Jind,84792.0,-10099.0,112.0,Over-Exploited
+Haryana,Kaithal,53509.0,-61048.0,214.0,Over-Exploited
+Haryana,Karnal,82231.0,-39660.0,148.0,Over-Exploited
+Haryana,Kurukshetra,35333.0,-42503.0,220.0,Over-Exploited
+Haryana,Mahendragarh,22480.0,-496.0,102.0,Over-Exploited
+Haryana,Panipat,31087.0,-19557.0,163.0,Over-Exploited
+Haryana,Rewari,28392.0,-3733.0,113.0,Over-Exploited
+Haryana,Rohtak,43771.0,13166.0,70.0,Semi-Critical
+Haryana,Sirsa,77352.0,-58867.0,176.0,Over-Exploited
+Haryana,Sonepat,76998.0,-30258.0,139.0,Over-Exploited
+Haryana,Yamunanagar,48441.0,-18492.0,138.0,Over-Exploited
+Himachal Pradesh,Indaura Valley,10038.64,4774.92,52.0,Safe
+Himachal Pradesh,Nurpur Valley,7035.39,4013.86,43.0,Safe
+Himachal Pradesh,Balh Valley,2825.59,1912.82,32.0,Safe
+Himachal Pradesh,Paonta Valley,7702.97,5528.51,28.0,Safe
+Himachal Pradesh,Nalagarh Valley,7941.86,3609.55,55.0,Safe
+Himachal Pradesh,Una Valley,16903.11,-4063.17,124.0,Over-Exploited
+Himachal Pradesh,Hum Valley,563.45,-16.05,100.0,Critical
+Jammu & Kashmir,Jammu,117092.0,94937.0,18.0,Safe
+Jammu & Kashmir,Kathua,48304.0,39043.0,18.0,Safe
+Jammu & Kashmir,Srinagar,14951.0,2147.0,66.0,Safe
+Jammu & Kashmir,Anantnag,45908.0,39392.0,11.0,Safe
+Jammu & Kashmir,Baramulla,46593.0,41233.0,10.0,Safe
+Jammu & Kashmir,Badgam,26669.0,18088.0,27.0,Safe
+Jammu & Kashmir,Pulwama,27803.0,17395.0,29.0,Safe
+Jammu & Kashmir,Kupwara,18950.0,12318.0,26.0,Safe
+Jammu & Kashmir,Udhampur,5835.0,2775.0,48.0,Safe
+Jammu & Kashmir,Rajouri,10620.0,6326.0,31.0,Safe
+Jammu & Kashmir,Poonch,9391.0,4476.0,40.0,Safe
+Jammu & Kashmir,Doda,5374.0,3654.0,20.0,Safe
+Jammu & Kashmir,Kargil,1425.0,1259.0,9.0,Safe
+Jammu & Kashmir,Leh,3694.0,3627.0,1.0,Safe
+Jharkhand,Bokaro,23081.0,14018.0,34.0,Safe
+Jharkhand,Chatra,28772.0,17623.0,36.0,Safe
+Jharkhand,Deoghar,23733.0,13423.0,35.0,Safe
+Jharkhand,Dhanbad,14943.0,5449.0,56.0,Safe
+Jharkhand,Dumka,27191.0,19047.0,28.0,Safe
+Jharkhand,E-Singhbhum,29100.0,22125.0,23.0,Safe
+Jharkhand,Garhwa,30986.0,18839.0,36.0,Safe
+Jharkhand,Giridih,43695.0,26142.0,37.0,Safe
+Jharkhand,Godda,14271.0,7488.0,45.0,Safe
+Jharkhand,Gumla,38478.0,27208.0,28.0,Safe
+Jharkhand,Hazaribagh,34250.0,18673.0,42.0,Safe
+Jharkhand,Jamtara,16407.0,11251.0,28.0,Safe
+Jharkhand,Khunti,15107.0,10213.0,29.0,Safe
+Jharkhand,Koderma,7572.0,4468.0,36.0,Safe
+Jharkhand,Latehar,24617.0,17325.0,28.0,Safe
+Jharkhand,Lohardaga,10058.0,5612.0,41.0,Safe
+Jharkhand,Pakur,13783.0,11101.0,15.0,Safe
+Jharkhand,Palamu,35676.0,22188.0,34.0,Safe
+Jharkhand,Ramgarh,12635.0,7531.0,40.0,Safe
+Jharkhand,Ranchi,36587.0,16465.0,48.0,Safe
+Jharkhand,Sahebganj,13228.0,9112.0,23.0,Safe
+Jharkhand,Saraikela,19465.0,15467.0,17.0,Safe
+Jharkhand,Simdega,27828.0,19178.0,29.0,Safe
+Jharkhand,W-Singhbhum,34742.0,29114.0,12.0,Safe
+Karnataka,Bagalkote,39574.0,10795.0,91.0,Critical
+Karnataka,Bangalore Rural,20184.0,107.0,127.0,Over-Exploited
+Karnataka,Bangalore Urban,12746.0,0.0,141.0,Over-Exploited
+Karnataka,Belgaum,103436.0,31892.0,78.0,Semi-Critical
+Karnataka,Bellary,65966.0,37877.0,42.0,Safe
+Karnataka,Bidar,30680.0,13719.0,57.0,Safe
+Karnataka,Bijapur,47410.0,16071.0,75.0,Semi-Critical
+Karnataka,Chamrajnagara,34322.0,10017.0,80.0,Semi-Critical
+Karnataka,Chikballapur,29883.0,1591.0,145.0,Over-Exploited
+Karnataka,Chikmagalur,56402.0,32580.0,43.0,Safe
+Karnataka,Chitradurga,49677.0,5998.0,102.0,Over-Exploited
+Karnataka,Dakshin Kannada,32404.0,10614.0,69.0,Safe
+Karnataka,Davangere,55952.0,11840.0,89.0,Semi-Critical
+Karnataka,Dharwad,21745.0,8549.0,59.0,Safe
+Karnataka,Gadag,24957.0,5581.0,89.0,Semi-Critical
+Karnataka,Gulbarga,63299.0,42025.0,32.0,Safe
+Karnataka,Hassan,73593.0,38414.0,55.0,Safe
+Karnataka,Haveri,53154.0,18465.0,64.0,Safe
+Karnataka,Kodagu,27441.0,21373.0,21.0,Safe
+Karnataka,Kolar,31828.0,0.0,187.0,Over-Exploited
+Karnataka,Koppal,54352.0,31181.0,43.0,Safe
+Karnataka,Mandya,94103.0,52536.0,47.0,Safe
+Karnataka,Mysore,57803.0,32178.0,43.0,Safe
+Karnataka,Raichur,83209.0,57628.0,31.0,Safe
+Karnataka,Ramanagara,22298.0,749.0,108.0,Over-Exploited
+Karnataka,Shimoga,92549.0,66378.0,27.0,Safe
+Karnataka,Tumkur,78424.0,15495.0,100.0,Critical
+Karnataka,Udupi,32775.0,20241.0,37.0,Safe
+Karnataka,Uttar Kannada,52905.0,32780.0,37.0,Safe
+Karnataka,Yadgir,38050.0,26500.0,28.0,Safe
+Kerala,Alappuzha,45290.0,31927.0,29.0,Safe
+Kerala,Ernakulam,58327.0,32722.0,42.0,Safe
+Kerala,Idukki,19655.0,10796.0,43.0,Safe
+Kerala,Kannur,48013.0,25137.0,46.0,Safe
+Kerala,Kasargod,32889.0,8387.0,71.0,Semi-Critical
+Kerala,Kollam,42221.0,25190.0,38.0,Safe
+Kerala,Kottayam,44570.0,30375.0,29.0,Safe
+Kerala,Kozhikode,34462.0,13469.0,56.0,Safe
+Kerala,Malappuram,49555.0,16996.0,57.0,Safe
+Kerala,Palakkad,78383.0,28894.0,62.0,Safe
+Kerala,Pathanamthitta,25302.0,15534.0,37.0,Safe
+Kerala,Thiruvananthapuram,32871.0,14187.0,53.0,Safe
+Kerala,Thrissur,68153.0,30769.0,53.0,Safe
+Kerala,Waynad,27607.0,22139.0,18.0,Safe
+Madhya Pradesh,Alirajpur,20565.0,13813.0,29.0,Safe
+Madhya Pradesh,Annupur,38155.0,35738.0,6.0,Safe
+Madhya Pradesh,Ashoknagar,41959.0,20806.0,48.0,Safe
+Madhya Pradesh,Balaghat,91034.0,77299.0,14.0,Safe
+Madhya Pradesh,Barwani,41301.0,9496.0,72.0,Semi-Critical
+Madhya Pradesh,Betul,113959.0,53580.0,52.0,Safe
+Madhya Pradesh,Bhind,62673.0,36323.0,41.0,Safe
+Madhya Pradesh,Bhopal,37266.0,8336.0,75.0,Semi-Critical
+Madhya Pradesh,Burhanpur,32373.0,7446.0,76.0,Semi-Critical
+Madhya Pradesh,Chhatarpur,74839.0,23318.0,67.0,Safe
+Madhya Pradesh,Chhindwara,132627.0,60477.0,53.0,Safe
+Madhya Pradesh,Damoh,40106.0,13484.0,62.0,Safe
+Madhya Pradesh,Datia,33018.0,16492.0,48.0,Safe
+Madhya Pradesh,Dewas,83264.0,14159.0,82.0,Semi-Critical
+Madhya Pradesh,Dhar,97867.0,15840.0,82.0,Semi-Critical
+Madhya Pradesh,Dindori,42611.0,39040.0,8.0,Safe
+Madhya Pradesh,Guna,75002.0,32923.0,55.0,Safe
+Madhya Pradesh,Gwalior,50187.0,26662.0,43.0,Safe
+Madhya Pradesh,Harda,51026.0,35966.0,29.0,Safe
+Madhya Pradesh,Hoshangabad,203145.0,163745.0,19.0,Safe
+Madhya Pradesh,Indore,57084.0,-12207.0,120.0,Over-Exploited
+Madhya Pradesh,Jabalpur,59126.0,28054.0,49.0,Safe
+Madhya Pradesh,Jhabua,22053.0,11254.0,45.0,Safe
+Madhya Pradesh,Katni,39015.0,21717.0,41.0,Safe
+Madhya Pradesh,Khandwa,79627.0,27936.0,62.0,Safe
+Madhya Pradesh,Khargone,75658.0,17425.0,75.0,Semi-Critical
+Madhya Pradesh,Mandla,55672.0,46255.0,15.0,Safe
+Madhya Pradesh,Mandsaur,57221.0,2029.0,96.0,Critical
+Madhya Pradesh,Morena,60885.0,33053.0,41.0,Safe
+Madhya Pradesh,Narsinghpur,116545.0,27907.0,76.0,Semi-Critical
+Madhya Pradesh,Neemuch,40656.0,6588.0,83.0,Semi-Critical
+Madhya Pradesh,Panna,51897.0,37441.0,26.0,Safe
+Madhya Pradesh,Raisen,90262.0,48775.0,45.0,Safe
+Madhya Pradesh,Rajgarh,86590.0,14004.0,83.0,Semi-Critical
+Madhya Pradesh,Ratlam,73687.0,-19312.0,126.0,Over-Exploited
+Madhya Pradesh,Rewa,46942.0,20402.0,54.0,Safe
+Madhya Pradesh,Sagar,122647.0,48012.0,59.0,Safe
+Madhya Pradesh,Satna,54162.0,13254.0,74.0,Semi-Critical
+Madhya Pradesh,Sehore,74999.0,14106.0,77.0,Semi-Critical
+Madhya Pradesh,Seoni,70970.0,49055.0,29.0,Safe
+Madhya Pradesh,Shahdol,64469.0,59485.0,7.0,Safe
+Madhya Pradesh,Shajapur,98902.0,1691.0,98.0,Critical
+Madhya Pradesh,Sheopur,42376.0,26467.0,37.0,Safe
+Madhya Pradesh,Shivpuri,74690.0,22621.0,68.0,Safe
+Madhya Pradesh,Sidhi,34195.0,19914.0,38.0,Safe
+Madhya Pradesh,Singrauli,35680.0,23517.0,30.0,Safe
+Madhya Pradesh,Tikamgarh,55672.0,14032.0,72.0,Semi-Critical
+Madhya Pradesh,Ujjain,91088.0,3594.0,95.0,Critical
+Madhya Pradesh,Umaria,44067.0,38534.0,11.0,Safe
+Madhya Pradesh,Vidisha,89045.0,39498.0,54.0,Safe
+Maharashtra,Ahmednagar,186132.0,40936.0,82.0,Semi-Critical
+Maharashtra,Akola,39979.0,20800.0,45.0,Safe
+Maharashtra,Amravati,89950.0,30342.0,68.0,Safe
+Maharashtra,Aurangabad,113647.0,29074.0,72.0,Semi-Critical
+Maharashtra,Beed,134803.0,61110.0,51.0,Safe
+Maharashtra,Bhandara,51409.0,32106.0,33.0,Safe
+Maharashtra,Buldhana,94162.0,27268.0,70.0,Semi-Critical
+Maharashtra,Chandrapur,103770.0,79764.0,16.0,Safe
+Maharashtra,Dhule,70205.0,32093.0,52.0,Safe
+Maharashtra,Gadchiroli,91562.0,65994.0,25.0,Safe
+Maharashtra,Gondia,60611.0,45030.0,20.0,Safe
+Maharashtra,Hingoli,102390.0,62412.0,37.0,Safe
+Maharashtra,Jalgaon,136193.0,29948.0,81.0,Semi-Critical
+Maharashtra,Jalna,90506.0,41081.0,53.0,Safe
+Maharashtra,Kolhapur,117907.0,68327.0,41.0,Safe
+Maharashtra,Latur,72014.0,18144.0,75.0,Semi-Critical
+Maharashtra,Nagpur,107038.0,46429.0,52.0,Safe
+Maharashtra,Nanded,134461.0,84990.0,35.0,Safe
+Maharashtra,Nandurbar,48614.0,21747.0,50.0,Safe
+Maharashtra,Nashik,191532.0,82051.0,58.0,Safe
+Maharashtra,Osmanabad,101277.0,26931.0,72.0,Semi-Critical
+Maharashtra,Parbhani,91878.0,48758.0,45.0,Safe
+Maharashtra,Pune,173304.0,45714.0,73.0,Semi-Critical
+Maharashtra,Raigad,59425.0,49442.0,13.0,Safe
+Maharashtra,Ratnagiri,45670.0,39222.0,11.0,Safe
+Maharashtra,Sangli,89480.0,15871.0,83.0,Semi-Critical
+Maharashtra,Satara,103351.0,23668.0,73.0,Semi-Critical
+Maharashtra,Sindhudurg,26238.0,14541.0,37.0,Safe
+Maharashtra,Solapur,159216.0,39527.0,77.0,Semi-Critical
+Maharashtra,Thane,58132.0,49281.0,13.0,Safe
+Maharashtra,Wardha,82472.0,41019.0,46.0,Safe
+Maharashtra,Washim,55969.0,32936.0,38.0,Safe
+Maharashtra,Yeotmal,131890.0,101013.0,19.0,Safe
+Manipur,Imphal West-I Block,,3570.05,2.64,Safe
+Manipur,Imphal West-Ii Block,,2781.92,0.5,Safe
+Manipur,Imphal East-I Block,,3397.49,0.2,Safe
+Manipur,Imphal East-Ii Block,,6900.45,0.46,Safe
+Manipur,Thoubal Block,,4183.61,0.8,Safe
+Manipur,Kakching Block,,4685.67,1.21,Safe
+Meghalaya,East Khasi Hills,33537.0,29961.0,0.02,Safe
+Meghalaya,West Garo Hills,48909.0,42959.0,0.31,Safe
+Meghalaya,East Garo Hills,35939.0,33094.0,0.01,Safe
+Meghalaya,Jaintia Hills,29505.0,25832.0,0.01,Safe
+Meghalaya,West Khasi Hills,5637.0,2063.0,0.04,Safe
+Meghalaya,Ri-Bhoi,5144.0,2680.0,0.02,Safe
+Meghalaya,South Garo Hills,1573.0,261.0,0.04,Safe
+Mizoram,Aizawl,280.0,198.0,7.46,Safe
+Mizoram,Champhai,626.0,603.0,2.54,Safe
+Mizoram,Kolasib,382.0,364.0,2.07,Safe
+Mizoram,Lawngtalai,521.0,493.0,1.64,Safe
+Mizoram,Lunglei,196.0,169.0,11.93,Safe
+Mizoram,Mamit,293.0,272.0,2.41,Safe
+Mizoram,Saiha,246.0,235.0,1.06,Safe
+Mizoram,Serchipp,189.0,177.0,5.29,Safe
+Nagaland,Kohima,4379.0,3601.0,12.9,Safe
+Nagaland,Dimapur,22388.0,21209.0,3.8,Safe
+Nagaland,Phek,3146.0,2868.0,7.6,Safe
+Nagaland,Mokokchung*,5662.0,5375.0,5.1,Safe
+Nagaland,Zunheboto*,2243.0,2036.0,9.2,Safe
+Nagaland,Wokha,4681.0,4426.0,5.2,Safe
+Nagaland,Tuensang,10400.0,9701.0,6.2,Safe
+Nagaland,Mon*,2533.0,2165.0,14.5,Safe
+Odisha,Angul,46077.0,29180.0,34.0,Safe
+Odisha,Balasore,110063.0,49467.0,53.0,Safe
+Odisha,Bargarh,46054.0,33650.0,26.0,Safe
+Odisha,Bhadrak,45409.0,17996.0,59.0,Safe
+Odisha,Bolangir,57656.0,44191.0,23.0,Safe
+Odisha,Boudh,27839.0,21876.0,20.0,Safe
+Odisha,Cuttack,70716.0,42322.0,38.0,Safe
+Odisha,Deogarh,20629.0,17023.0,16.0,Safe
+Odisha,Dhenkanal,44264.0,32200.0,26.0,Safe
+Odisha,Gajapati,22670.0,16286.0,27.0,Safe
+Odisha,Ganjam,114541.0,77558.0,30.0,Safe
+Odisha,Jagatsinghpur,45029.0,21332.0,52.0,Safe
+Odisha,Jajpur,56933.0,28419.0,49.0,Safe
+Odisha,Jharsuguda,16791.0,11444.0,31.0,Safe
+Odisha,Kalahandi,74911.0,54648.0,20.0,Safe
+Odisha,Kandhamal,70266.0,60665.0,13.0,Safe
+Odisha,Kendrapara,16781.0,7034.0,57.0,Safe
+Odisha,Keonjhar,81323.0,57642.0,29.0,Safe
+Odisha,Khurda,47618.0,29467.0,33.0,Safe
+Odisha,Koraput,69117.0,61850.0,10.0,Safe
+Odisha,Malkangiri,33598.0,29887.0,9.0,Safe
+Odisha,Mayurbhanj,148194.0,102538.0,30.0,Safe
+Odisha,Nabarangapur,50478.0,39242.0,15.0,Safe
+Odisha,Nayagarh,42682.0,31900.0,24.0,Safe
+Odisha,Nuapada,33686.0,24913.0,21.0,Safe
+Odisha,Puri,58806.0,45631.0,21.0,Safe
+Odisha,Rayagada,65681.0,55576.0,15.0,Safe
+Odisha,Sambalpur,52520.0,43398.0,16.0,Safe
+Odisha,Subarnapur,21429.0,16853.0,20.0,Safe
+Odisha,Sundergarh,77325.0,59465.0,22.0,Safe
+Punjab,Amritsar,123365.0,-101596.0,180.0,Over-Exploited
+Punjab,Barnala,58939.0,-61778.0,204.0,Over-Exploited
+Punjab,Bathinda,101681.0,-21266.0,119.0,Over-Exploited
+Punjab,Faridkot,61061.0,-36485.0,160.0,Over-Exploited
+Punjab,Fateh Garh Sahib,53919.0,-59963.0,210.0,Over-Exploited
+Punjab,Ferozepur,189552.0,-91013.0,147.0,Over-Exploited
+Punjab,Gurdaspur,177621.0,-51433.0,127.0,Over-Exploited
+Punjab,Hoshiarpur,89774.0,-3522.0,102.0,Over-Exploited
+Punjab,Jalandhar,117476.0,-156339.0,231.0,Over-Exploited
+Punjab,Kapurthala,66019.0,-89261.0,234.0,Over-Exploited
+Punjab,Ludhiana,208139.0,-145131.0,167.0,Over-Exploited
+Punjab,Mansa,69647.0,-75107.0,208.0,Over-Exploited
+Punjab,Moga,120572.0,-123953.0,202.0,Over-Exploited
+Punjab,Muktsar,77914.0,23829.0,69.0,Safe
+Punjab,Nawan Shahr,62746.0,-9883.0,115.0,Over-Exploited
+Punjab,Patiala,149451.0,-145855.0,196.0,Over-Exploited
+Punjab,Ropar,41829.0,-5136.0,110.0,Over-Exploited
+Punjab,Mohali,27484.0,-1626.0,103.0,Over-Exploited
+Punjab,Sangrur,130551.0,-240290.0,283.0,Over-Exploited
+Punjab,Tarn Taran,104402.0,-87381.0,182.0,Over-Exploited
+Rajasthan,Ajmer,32206.0,0.0,144.0,Over-Exploited
+Rajasthan,Alwar,73169.0,399.0,179.0,Over-Exploited
+Rajasthan,Banswara,23066.0,10982.0,49.0,Safe
+Rajasthan,Baran,47163.0,5562.0,120.0,Over-Exploited
+Rajasthan,Barmer,24729.0,2117.0,124.0,Over-Exploited
+Rajasthan,Bharatpur,44936.0,396.0,116.0,Over-Exploited
+Rajasthan,Bhilwara,41955.0,0.0,129.0,Over-Exploited
+Rajasthan,Bikaner,24001.0,4011.0,143.0,Over-Exploited
+Rajasthan,Bundi,36295.0,5328.0,100.0,Critical
+Rajasthan,Chittorgarh,31860.0,0.0,140.0,Over-Exploited
+Rajasthan,Churu,13395.0,3096.0,88.0,Semi-Critical
+Rajasthan,Dausa,23753.0,0.0,170.0,Over-Exploited
+Rajasthan,Dholpur,25930.0,1596.0,128.0,Over-Exploited
+Rajasthan,Dungarpur,12812.0,0.0,72.0,Semi-Critical
+Rajasthan,Ganganagar,36719.0,20068.0,44.0,Safe
+Rajasthan,Hanumangarh,20384.0,3561.0,81.0,Semi-Critical
+Rajasthan,Jaipur,64552.0,979.0,207.0,Over-Exploited
+Rajasthan,Jaisalmer,6159.0,1874.0,199.0,Over-Exploited
+Rajasthan,Jalore,42200.0,969.0,194.0,Over-Exploited
+Rajasthan,Jhalawar,41223.0,479.0,119.0,Over-Exploited
+Rajasthan,Jhunjhunu,24000.0,330.0,226.0,Over-Exploited
+Rajasthan,Jodhpur,38713.0,4761.0,216.0,Over-Exploited
+Rajasthan,Karauli,33697.0,1239.0,137.0,Over-Exploited
+Rajasthan,Kota,51330.0,7776.0,92.0,Critical
+Rajasthan,Nagaur,52426.0,4120.0,189.0,Over-Exploited
+Rajasthan,Pali,29630.0,959.0,115.0,Over-Exploited
+Rajasthan,Pratapgarh,14086.0,399.0,124.0,Over-Exploited
+Rajasthan,Rajsamand,10686.0,63.0,110.0,Over-Exploited
+Rajasthan,Sawai Madhopur,36042.0,209.0,126.0,Over-Exploited
+Rajasthan,Sikar,29111.0,972.0,147.0,Over-Exploited
+Rajasthan,Sirohi,27485.0,1126.0,113.0,Over-Exploited
+Rajasthan,Tonk,43894.0,1841.0,99.0,Critical
+Rajasthan,Udaipur,25291.0,450.0,103.0,Over-Exploited
+Sikkim,North,236.0,142.0,38.0,Safe
+Sikkim,South,1336.0,1001.0,22.0,Safe
+Sikkim,East,782.0,216.0,61.0,Safe
+Sikkim,West,2062.0,1763.0,13.0,Safe
+Tamil Nadu,Ariyalur,31497.0,15198.0,51.0,Safe
+Tamil Nadu,Chennai,2707.0,-4255.0,226.0,Over-Exploited
+Tamil Nadu,Coimbatore,43881.0,-6376.0,115.0,Over-Exploited
+Tamil Nadu,Cuddalore,123708.0,16619.0,86.0,Semi-Critical
+Tamil Nadu,Dharmapuri,37584.0,-12406.0,132.0,Over-Exploited
+Tamil Nadu,Dindigul,53656.0,-10356.0,119.0,Over-Exploited
+Tamil Nadu,Erode,69603.0,3961.0,94.0,Critical
+Tamil Nadu,Kanchipuram,105525.0,32746.0,66.0,Safe
+Tamil Nadu,Kanniyakumari,30446.0,24566.0,19.0,Safe
+Tamil Nadu,Karur,32323.0,2194.0,92.0,Critical
+Tamil Nadu,Krishnagiri,35494.0,-12478.0,133.0,Over-Exploited
+Tamil Nadu,Madurai,65868.0,27620.0,58.0,Safe
+Tamil Nadu,Nagapattinam,15916.0,-525.0,102.0,Over-Exploited
+Tamil Nadu,Namakkal,49173.0,5695.0,89.0,Semi-Critical
+Tamil Nadu,Nilgiri,11894.0,10724.0,10.0,Safe
+Tamil Nadu,Perambalur,20762.0,-7408.0,135.0,Over-Exploited
+Tamil Nadu,Pudukkottai,143108.0,111542.0,22.0,Safe
+Tamil Nadu,Ramanathapuram,68268.0,59872.0,12.0,Safe
+Tamil Nadu,Salem,52356.0,-31037.0,164.0,Over-Exploited
+Tamil Nadu,Sivagangai,98589.0,82687.0,16.0,Safe
+Tamil Nadu,Thanjavur,78905.0,-3358.0,104.0,Over-Exploited
+Tamil Nadu,Theni,35718.0,4809.0,86.0,Semi-Critical
+Tamil Nadu,Thiruvallur,72840.0,22902.0,68.0,Safe
+Tamil Nadu,Thoothukudi,54456.0,30385.0,43.0,Safe
+Tamil Nadu,Tirunelveli,88832.0,36849.0,58.0,Safe
+Tamil Nadu,Tiruppur,44325.0,-11799.0,127.0,Over-Exploited
+Tamil Nadu,Tiruvarur,29980.0,8376.0,71.0,Semi-Critical
+Tamil Nadu,Tirvannamalai,109334.0,16369.0,85.0,Semi-Critical
+Tamil Nadu,Trichy,72560.0,20056.0,79.0,Semi-Critical
+Tamil Nadu,Vellore,59280.0,-3857.0,105.0,Over-Exploited
+Tamil Nadu,Villupuram,149828.0,-4869.0,103.0,Over-Exploited
+Tamil Nadu,Virudhunagar,49519.0,14802.0,69.0,Safe
+Tripura,West Tripura,87697.0,72100.0,12.0,Safe
+Tripura,South Tripura,68813.0,61211.0,5.0,Safe
+Tripura,North Tripura,42039.0,37792.0,4.0,Safe
+Tripura,Dhalai,37251.0,35421.0,2.0,Safe
+Uttar Pradesh,Agra,82214.0,5192.0,114.0,Over-Exploited
+Uttar Pradesh,Aligarh,86808.0,12409.0,82.0,Semi-Critical
+Uttar Pradesh,Allahabad,117531.0,21956.0,81.0,Semi-Critical
+Uttar Pradesh,Ambedkar Nagar,102989.0,41479.0,57.0,Safe
+Uttar Pradesh,Amethi,100781.0,28220.0,68.0,Safe
+Uttar Pradesh,Amroha (J P Nagar),66549.0,4314.0,108.0,Over-Exploited
+Uttar Pradesh,Auraiya,64242.0,18817.0,69.0,Safe
+Uttar Pradesh,Azamgarh,132861.0,37525.0,65.0,Safe
+Uttar Pradesh,Baghapat,45369.0,934.0,98.0,Critical
+Uttar Pradesh,Bahraich,107549.0,42159.0,55.0,Safe
+Uttar Pradesh,Ballia,88953.0,26062.0,66.0,Safe
+Uttar Pradesh,Balrampur,84891.0,41232.0,50.0,Safe
+Uttar Pradesh,Banda,67546.0,29526.0,55.0,Safe
+Uttar Pradesh,Barabanki,207632.0,70599.0,64.0,Safe
+Uttar Pradesh,Bareilly,174396.0,66853.0,60.0,Safe
+Uttar Pradesh,Basti.,101044.0,19209.0,79.0,Semi-Critical
+Uttar Pradesh,Bijnor,137519.0,45971.0,67.0,Safe
+Uttar Pradesh,Budaun,111378.0,17042.0,85.0,Semi-Critical
+Uttar Pradesh,Bulandshahar,151866.0,26314.0,82.0,Semi-Critical
+Uttar Pradesh,Chandauli,71669.0,39848.0,38.0,Safe
+Uttar Pradesh,Chitrakoot,24495.0,7586.0,66.0,Safe
+Uttar Pradesh,Deoria,101175.0,19652.0,78.0,Semi-Critical
+Uttar Pradesh,Etah,64198.0,6878.0,88.0,Semi-Critical
+Uttar Pradesh,Etawah,73924.0,39175.0,46.0,Safe
+Uttar Pradesh,Faizabad,72700.0,26568.0,62.0,Safe
+Uttar Pradesh,Farrukhabad,61894.0,10647.0,80.0,Semi-Critical
+Uttar Pradesh,Fatehpur,111528.0,4085.0,95.0,Critical
+Uttar Pradesh,Firozabad,73046.0,5266.0,117.0,Over-Exploited
+Uttar Pradesh,G.B.Nagar,45820.0,3944.0,93.0,Critical
+Uttar Pradesh,Ghaziabad,30016.0,2452.0,105.0,Over-Exploited
+Uttar Pradesh,Ghazipur,125085.0,34970.0,68.0,Safe
+Uttar Pradesh,Gonda,117028.0,31618.0,71.0,Semi-Critical
+Uttar Pradesh,Gorakhpur,176256.0,73632.0,55.0,Safe
+Uttar Pradesh,Hamirpur,51535.0,16732.0,64.0,Safe
+Uttar Pradesh,Hapur,40039.0,5045.0,89.0,Semi-Critical
+Uttar Pradesh,Hardoi,181375.0,52767.0,69.0,Safe
+Uttar Pradesh,Hathras,57482.0,10278.0,85.0,Semi-Critical
+Uttar Pradesh,Jalaun,185119.0,130211.0,29.0,Safe
+Uttar Pradesh,Jaunpur,124306.0,14904.0,89.0,Semi-Critical
+Uttar Pradesh,Jhansi,61296.0,19012.0,68.0,Safe
+Uttar Pradesh,Kannauj,64654.0,24210.0,67.0,Safe
+Uttar Pradesh,Kanpur Dehat,86885.0,26139.0,68.0,Safe
+Uttar Pradesh,Kanpur Nagar,78787.0,0.0,85.0,Semi-Critical
+Uttar Pradesh,Kasganj,58090.0,4026.0,100.0,Critical
+Uttar Pradesh,Kaushambhi,49945.0,6575.0,91.0,Critical
+Uttar Pradesh,Kushi Nagar,166495.0,81120.0,47.0,Safe
+Uttar Pradesh,Lakhimpur Kheri,284590.0,100160.0,62.0,Safe
+Uttar Pradesh,Lalitpur,49124.0,18397.0,62.0,Safe
+Uttar Pradesh,Lucknow,64315.0,16062.0,69.0,Safe
+Uttar Pradesh,Maharajganj,112163.0,38516.0,62.0,Safe
+Uttar Pradesh,Mahoba,16168.0,23.0,112.0,Over-Exploited
+Uttar Pradesh,Mainpuri,91583.0,14890.0,86.0,Semi-Critical
+Uttar Pradesh,Mathura,104812.0,22239.0,92.0,Critical
+Uttar Pradesh,Maunath Bhanjan,48296.0,11372.0,70.0,Semi-Critical
+Uttar Pradesh,Meerut,115160.0,33560.0,70.0,Semi-Critical
+Uttar Pradesh,Mirzapur,57819.0,16889.0,62.0,Safe
+Uttar Pradesh,Moradabad,82697.0,13956.0,85.0,Semi-Critical
+Uttar Pradesh,Muzaffarnagar,98139.0,36019.0,66.0,Safe
+Uttar Pradesh,Pilibhit,123930.0,41768.0,65.0,Safe
+Uttar Pradesh,Pratapgarh,115645.0,28204.0,141.0,Over-Exploited
+Uttar Pradesh,Raebarely,85359.0,19857.0,73.0,Semi-Critical
+Uttar Pradesh,Rampur,70056.0,7053.0,107.0,Over-Exploited
+Uttar Pradesh,Saharanpur,133081.0,0.0,133.0,Over-Exploited
+Uttar Pradesh,Sambhal,63993.0,1718.0,109.0,Over-Exploited
+Uttar Pradesh,Sant Kabeer Nagar,71202.0,21183.0,67.0,Safe
+Uttar Pradesh,Sant Ravidas Nagar,39972.0,473.0,93.0,Critical
+Uttar Pradesh,Shahjahnpur,137267.0,53147.0,59.0,Safe
+Uttar Pradesh,Shamli,42357.0,447.0,140.0,Over-Exploited
+Uttar Pradesh,Shrawasti,42110.0,10419.0,70.0,Semi-Critical
+Uttar Pradesh,Siddhrth Nagar,145272.0,47705.0,64.0,Safe
+Uttar Pradesh,Sitapur,234032.0,64580.0,70.0,Semi-Critical
+Uttar Pradesh,Sonbhadra,21106.0,6780.0,43.0,Safe
+Uttar Pradesh,Sultanpur,104541.0,24526.0,73.0,Semi-Critical
+Uttar Pradesh,Unnao,175443.0,57054.0,65.0,Safe
+Uttar Pradesh,Varanasi,48595.0,3402.0,86.0,Semi-Critical
+Uttarakhand,Dehradun,36458.0,28105.0,12.0,Safe
+Uttarakhand,Hardwar,71103.0,30705.0,56.0,Safe
+Uttarakhand,Nainital,10341.0,5731.0,43.0,Safe
+Uttarakhand,Udham Singh Nagar,81639.0,15326.0,79.0,Semi-Critical
+West Bengal,Malda,139912.0,81140.0,40.0,Safe
+West Bengal,Nadia,191095.0,12654.0,92.0,Critical
+West Bengal,Kochbihar,247301.0,203752.0,17.0,Safe
+West Bengal,North 24 Parganas,147570.0,50951.0,62.0,Safe
+West Bengal,Dakshin Dinajpur,103544.0,55015.0,46.0,Safe
+West Bengal,Uttar Dinajpur,171293.0,89853.0,46.0,Safe
+West Bengal,Bankura,153736.0,89560.0,40.0,Safe
+West Bengal,Purulia,65957.0,58281.0,9.0,Safe
+West Bengal,Jalpaiguri,253647.0,240764.0,4.0,Safe
+West Bengal,Barddhaman,257882.0,160154.0,36.0,Safe
+West Bengal,Murshidabad,222259.0,40114.0,79.0,Semi-Critical
+West Bengal,Birbhum,107679.0,67846.0,34.0,Safe
+West Bengal,Howrah,26375.0,16307.0,25.0,Safe
+West Bengal,Darjeeling,44616.0,41861.0,5.0,Safe
+West Bengal,Hoogly,132895.0,69674.0,45.0,Safe
+West Bengal,Paschim Medinipur,319924.0,212193.0,32.0,Safe
+West Bengal,Purba Medinipur,72545.0,48102.0,32.0,Safe
