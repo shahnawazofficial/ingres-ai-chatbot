@@ -374,6 +374,26 @@ async def health():
         "timestamp": datetime.utcnow().isoformat(),
     }
 
+@app.get("/api/debug", tags=["Meta"])
+async def debug():
+    """Diagnostic endpoint — shows what is configured on this server instance."""
+    import platform
+    key = os.getenv("GEMINI_API_KEY", "")
+    return {
+        "gemini_key_set":    bool(key),
+        "gemini_key_prefix": key[:8] + "..." if key else "NOT SET",
+        "csv_loaded":        df_groundwater is not None,
+        "csv_rows":          len(df_groundwater) if df_groundwater is not None else 0,
+        "vector_store":      collection.count() if collection else "unavailable",
+        "python_version":    platform.python_version(),
+        "env_port":          os.getenv("PORT", "not set (local)"),
+        "project_root":      _project_root,
+        "web_dir_exists":    os.path.isdir(os.path.join(_project_root, "web")),
+        "csv_path_exists":   os.path.exists(
+            os.path.join(_project_root, "data", "processed", "groundwater_data.csv")
+        ),
+    }
+
 @app.post("/chat", response_model=ChatResponse, tags=["Chat"])
 async def chat(request: ChatRequest):
     t0 = time.time()
