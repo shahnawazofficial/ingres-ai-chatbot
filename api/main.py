@@ -13,6 +13,8 @@ Features:
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from typing import Optional
 import sys, os, requests, time, hashlib
@@ -215,6 +217,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- Serve frontend static files ---------------------------------------------
+_web_dir = os.path.join(_project_root, "web")
+if os.path.isdir(_web_dir):
+    app.mount("/static", StaticFiles(directory=_web_dir), name="static")
+
 # --- Models ------------------------------------------------------------------
 class ChatRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=1000)
@@ -337,10 +344,15 @@ def _call_gemini(prompt: str, history: list = None, timeout: int = 30) -> str:
     raise HTTPException(status_code=503, detail=f"AI service unavailable: {last_err}")
 
 # --- Endpoints ---------------------------------------------------------------
-@app.get("/", tags=["Meta"])
+@app.get("/", tags=["Meta"], include_in_schema=False)
 async def root():
+    """Serve the frontend web app."""
+    index_path = os.path.join(_project_root, "web", "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path, media_type="text/html")
+    # Fallback JSON if frontend not present
     return {"status": "running", "version": "2.0.0",
-            "endpoints": ["/chat", "/api/stats", "/api/search", "/health", "/docs"]}
+            "docs": "/docs", "health": "/health"}
 
 @app.get("/health", tags=["Meta"])
 async def health():

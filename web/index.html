@@ -209,7 +209,8 @@ main{display:flex;flex-direction:column;overflow:hidden;height:calc(100vh - 69px
 <div class="toast" id="toast"></div>
 
 <script>
-const API = 'http://localhost:8000';
+// Empty string = relative URLs — works on Railway, local, any host
+const API = '';
 const SESSION = 'session_' + Math.random().toString(36).slice(2);
 let firstMsg = true;
 let distChart = null;
@@ -227,7 +228,7 @@ async function init() {
 }
 
 function setOffline() {
-  document.getElementById('statusText').textContent = 'Offline — start API server';
+  document.getElementById('statusText').textContent = 'Service unavailable';
   document.getElementById('statusPill').style.background = 'rgba(239,68,68,.1)';
   document.getElementById('statusPill').style.color = 'var(--red)';
   document.getElementById('statusPill').querySelector('.status-dot').style.background = 'var(--red)';
@@ -336,7 +337,7 @@ async function sendMessage() {
     document.getElementById('typing').classList.remove('active');
     const msg = err.name === 'TimeoutError'
       ? '⏱️ **Request timed out.** The AI may be processing a complex query — please try again.'
-      : `❌ **Cannot connect to API** at \`${API}\`.\n\nMake sure the backend is running:\n\`\`\`\ncd api\npython main.py\n\`\`\``;
+      : '❌ **Cannot reach the server.** Please refresh the page or try again in a moment.';
     addMsg(msg, false);
   }
   document.getElementById('sendBtn').disabled = false;
