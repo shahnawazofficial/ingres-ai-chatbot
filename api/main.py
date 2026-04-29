@@ -279,9 +279,9 @@ QUESTION: {query}
 
 ANSWER:"""
 
-def _call_gemini(prompt: str, history: list = None, timeout: int = 30) -> str:
+def _call_gemini(prompt: str, history: list = None, timeout: int = 45) -> str:
     if not api_key:
-        raise HTTPException(status_code=503, detail="GEMINI_API_KEY not configured")
+        raise HTTPException(status_code=503, detail="GEMINI_API_KEY not configured. Set it in Railway Variables.")
 
     contents = []
     if history:
@@ -295,15 +295,17 @@ def _call_gemini(prompt: str, history: list = None, timeout: int = 30) -> str:
     }
 
     last_err = "unknown"
+    # Only models confirmed available for free-tier API keys
+    # gemini-1.5-flash is NOT listed in your account's available models
     models_to_try = [
-        "gemini-2.5-flash",   # Primary: Gemini 2.5 Flash
-        "gemini-2.0-flash",   # Fallback: Gemini 2.0 Flash
-        "gemini-1.5-flash",   # Final fallback
+        "gemini-2.5-flash",       # Primary (confirmed working)
+        "gemini-2.0-flash",       # Fallback (confirmed in ListModels)
+        "gemini-2.0-flash-lite",  # Lightest fallback - highest rate limits
     ]
     base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 
     for model in models_to_try:
-        for attempt in range(2):
+        for attempt in range(3):  # 3 attempts per model
             try:
                 url = f"{base_url}/{model}:generateContent?key={api_key}"
                 resp = requests.post(
@@ -315,14 +317,16 @@ def _call_gemini(prompt: str, history: list = None, timeout: int = 30) -> str:
                 if resp.status_code == 200:
                     return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
                 elif resp.status_code == 404:
-                    # Model not found — try next model
-                    last_err = f"Model {model} not found"
-                    break
-                elif resp.status_code in (429, 503):
-                    last_err = f"HTTP {resp.status_code}"
-                    time.sleep(2 ** attempt)
+                    last_err = f"{model} not available on this API key"
+                    break  # try next model
+                elif resp.status_code == 429:
+                    wait = min(int(resp.headers.get("Retry-After", 10 * (attempt + 1))), 30)
+                    last_err = f"{model} rate-limited (429)"
+                    time.sleep(wait)
+                elif resp.status_code == 503:
+                    last_err = f"{model} overloaded (503)"
+                    time.sleep(5 * (attempt + 1))
                 elif resp.status_code in (400, 401, 403):
-                    # API key or permission issue — parse the error
                     try:
                         err_body = resp.json()
                         err_msg = err_body.get("error", {}).get("message", resp.text[:200])
@@ -331,17 +335,23 @@ def _call_gemini(prompt: str, history: list = None, timeout: int = 30) -> str:
                     raise HTTPException(
                         status_code=401,
                         detail=f"Gemini API key error: {err_msg}. "
-                               "Please update GEMINI_API_KEY in the .env file. "
-                               "Get a free key at https://ai.google.dev/"
+                               "Update GEMINI_API_KEY in Railway Variables."
                     )
                 else:
-                    last_err = f"HTTP {resp.status_code}: {resp.text[:100]}"
+                    last_err = f"{model} HTTP {resp.status_code}"
                     break
             except requests.Timeout:
-                last_err = "timeout"
-                time.sleep(1)
+                last_err = f"{model} timed out"
+                time.sleep(3)
+            except requests.RequestException as e:
+                last_err = f"{model} connection error: {str(e)[:60]}"
+                break
 
-    raise HTTPException(status_code=503, detail=f"AI service unavailable: {last_err}")
+    raise HTTPException(
+        status_code=503,
+        detail=f"All AI models unavailable. Last: {last_err}. "
+               "Free tier limit: 5 req/min — wait 1 minute and try again."
+    )
 
 # --- Endpoints ---------------------------------------------------------------
 @app.get("/", tags=["Meta"], include_in_schema=False)
