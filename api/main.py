@@ -296,9 +296,9 @@ def _call_gemini(prompt: str, history: list = None, timeout: int = 30) -> str:
 
     last_err = "unknown"
     models_to_try = [
-        "gemini-2.5-flash",
-        "gemini-1.5-flash",
-        "gemini-1.5-flash-latest",
+        "gemini-2.5-flash",   # Primary: Gemini 2.5 Flash
+        "gemini-2.0-flash",   # Fallback: Gemini 2.0 Flash
+        "gemini-1.5-flash",   # Final fallback
     ]
     base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 
