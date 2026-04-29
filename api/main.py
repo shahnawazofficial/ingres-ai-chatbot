@@ -19,9 +19,13 @@ import sys, os, requests, time, hashlib
 from collections import OrderedDict
 from datetime import datetime
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Ensure project root is on the path (works locally and on Railway)
+_project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
+
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv()  # no-op on Railway (uses env vars from dashboard)
 
 # --- Optional deps -----------------------------------------------------------
 try:
@@ -31,7 +35,7 @@ except ImportError:
     PANDAS_OK = False
 
 try:
-    from chromadb import PersistentClient
+    import chromadb
     CHROMA_OK = True
 except Exception:
     CHROMA_OK = False
@@ -169,8 +173,9 @@ async def lifespan(app: FastAPI):
 
     if CHROMA_OK:
         try:
-            base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            client = PersistentClient(path=os.path.join(base, "data", "embeddings"))
+            client = chromadb.PersistentClient(
+                path=os.path.join(_project_root, "data", "embeddings")
+            )
             collection = client.get_collection("groundwater_data")
             print(f"OK  Vector store: {collection.count()} docs")
         except Exception as e:
@@ -180,11 +185,12 @@ async def lifespan(app: FastAPI):
 
     if PANDAS_OK:
         try:
-            base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            csv_path = os.path.join(base, "data", "processed", "groundwater_data.csv")
+            csv_path = os.path.join(_project_root, "data", "processed", "groundwater_data.csv")
             if os.path.exists(csv_path):
                 df_groundwater = _load_clean_dataframe(csv_path)
                 print(f"OK  CSV: {len(df_groundwater)} district rows")
+            else:
+                print(f"WARN CSV not found at {csv_path}")
         except Exception as e:
             print(f"WARN CSV load failed: {e}")
 

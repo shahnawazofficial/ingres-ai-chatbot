@@ -1,4 +1,13 @@
-# Python
+# ── Secrets & Environment ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+config/secrets.json
+*.key
+*.pem
+
+# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
@@ -20,54 +29,39 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual Environment
+# ── Virtual Environments ──────────────────────────────────────────────────────
 venv/
 env/
 ENV/
-.venv
+.venv/
 
-# API Keys and Secrets
-.env
-.env.local
-.env.*.local
-config/secrets.json
-*.key
-*.pem
-
-# IDE
+# ── IDE ───────────────────────────────────────────────────────────────────────
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# ── OS ────────────────────────────────────────────────────────────────────────
 .DS_Store
+Thumbs.db
 
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb_checkpoints/
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
 
-# Data Files (Large files that shouldn't be on GitHub)
+# ── Data & Embeddings (large / generated files) ───────────────────────────────
 data/embeddings/
+data/raw/*.pdf
 *.db
 *.sqlite3
 *.sqlite
+chroma.sqlite3
+.chroma/
 
-# Logs
+# ── Logs & Temp ───────────────────────────────────────────────────────────────
 logs/
 *.log
-
-# Large PDFs (optional - if PDF is too large)
-# data/raw/*.pdf
-
-# Temporary files
 *.tmp
 *.bak
 *.cache
-
-# OS
-Thumbs.db
-.DS_Store
-
-# ChromaDB
-chroma.sqlite3
-.chroma/
