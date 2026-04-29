@@ -393,10 +393,26 @@ async def chat(request: ChatRequest):
         except Exception as e:
             context = f"[Vector search error: {e}]"
     elif df_groundwater is not None:
+        q_lower = query.lower()
+        # Try keyword match on state/district first
         mask = df_groundwater.apply(
-            lambda r: query.lower() in str(r["state"]).lower()
-                      or query.lower() in str(r["district"]).lower(), axis=1)
-        rows = df_groundwater[mask].head(8)
+            lambda r: q_lower in str(r["state"]).lower()
+                      or q_lower in str(r["district"]).lower(), axis=1)
+        rows = df_groundwater[mask].head(10)
+
+        if rows.empty:
+            # No keyword match — check for category keywords in query
+            if any(w in q_lower for w in ("over-exploit", "overexploit", "critical", "urgent", "stress", "worst", "highest")):
+                rows = df_groundwater.nlargest(15, "stage_pct")[
+                    ["state", "district", "stage_pct", "category"]]
+            elif any(w in q_lower for w in ("safe", "good", "best", "lowest")):
+                rows = df_groundwater.nsmallest(15, "stage_pct")[
+                    ["state", "district", "stage_pct", "category"]]
+            else:
+                # General question — send a representative sample with all categories
+                rows = df_groundwater.nlargest(20, "stage_pct")[
+                    ["state", "district", "stage_pct", "category"]]
+
         context = rows.to_string(index=False) if not rows.empty else "No matching records."
 
     prompt = _build_prompt(query, context)
