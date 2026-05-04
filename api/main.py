@@ -335,7 +335,8 @@ class SearchRequest(BaseModel):
 
 # ── Gemini (async) ────────────────────────────────────────────────────────────
 SYSTEM_PROMPT = """You are INGRES-AI, an expert assistant for India Groundwater Resource Estimation System.
-Answer questions about groundwater availability, extraction rates, and district classifications using CGWB data.
+You have access to the complete CGWB district-wise groundwater database covering 637 districts across 35 states and UTs of India.
+Answer questions about groundwater availability, extraction rates, and district classifications using the DATA provided below.
 
 Classification:
 - Safe           : Stage of GW Development < 70%
@@ -344,10 +345,10 @@ Classification:
 - Over-Exploited : > 100%
 
 Rules:
-1. Cite specific numbers (ham = hectare-meters, bcm = billion cubic meters).
-2. If context lacks the answer, say so clearly — do NOT hallucinate.
-3. Use markdown bullets for multiple items.
-4. Keep answers under 250 words unless asked for detail.
+1. ALWAYS use the DATA section — it contains real district records. Never say 'data not available' if records are shown.
+2. Cite specific numbers from the data (ham = hectare-meters).
+3. Use markdown bullets for multiple districts.
+4. Keep answers clear and structured.
 5. End with a one-line Insight: summary."""
 
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
@@ -366,7 +367,7 @@ async def _call_gemini_async(prompt: str, history: list = None, timeout: int = 2
 
     payload = {
         "contents": contents,
-        "generationConfig": {"temperature": 0.2, "topP": 0.9, "maxOutputTokens": 600},
+        "generationConfig": {"temperature": 0.2, "topP": 0.9, "maxOutputTokens": 1000},
     }
 
     # Try primary then fallback — both verified working
@@ -470,29 +471,38 @@ async def chat(request: ChatRequest):
                 processing_time=round(time.time()-t0, 3), cached=True
             )
 
-    # Build context — CSV is ALWAYS the primary source (634 districts, all states)
+    # Build context — CSV is ALWAYS the primary source (637 districts, all 35 states/UTs)
     # Vector store supplements only if it has valid district documents
     context, sources = "", []
 
     # 1. Always query the structured CSV first (guaranteed to have all districts)
     if df_gw is not None:
         rows = _query_df(df_gw, query)
-        context = rows.to_string(index=False) if not rows.empty else "No matching records."
+        if not rows.empty:
+            # Smart context building: for large result sets, include all but cap intelligently
+            if len(rows) > 30:
+                # Summarize as compact table for large states (e.g. UP=75 districts)
+                compact = rows[[c for c in ["state","district","stage_pct","category"] if c in rows.columns]]
+                context = compact.to_string(index=False)
+            else:
+                context = rows.to_string(index=False)
+        else:
+            context = "No matching records found in the 637-district database."
 
-    # 2. Optionally supplement with vector store (only if it has real district docs)
+    # 2. Supplement with vector store (only valid district docs)
     if collection:
         try:
             n = min(request.n_results, collection.count())
             res = collection.query(query_texts=[query], n_results=n)
             vec_docs = res.get("documents", [[]])[0]
             vec_meta = res.get("metadatas", [[]])[0]
-            # Only use vector docs that look like real district entries (have 'state' in metadata)
             valid_docs = [
                 doc for doc, meta in zip(vec_docs, vec_meta)
                 if isinstance(meta, dict) and meta.get("state")
             ]
             if valid_docs:
-                context = context + "\n\nADDITIONAL CONTEXT:\n" + "\n\n".join(valid_docs)
+                extra = "\n\nSEMANTIC MATCHES:\n" + "\n---\n".join(valid_docs[:5])
+                context = context + extra
                 sources = [
                     m.get("source", "") for m in vec_meta
                     if isinstance(m, dict) and m.get("source")
@@ -500,7 +510,12 @@ async def chat(request: ChatRequest):
         except Exception as e:
             log.error(f"Vector search error: {e}")
 
-    prompt  = f"{SYSTEM_PROMPT}\n\n---\nDATA:\n{context[:6000]}\n---\n\nQUESTION: {query}\n\nANSWER:"
+    # Cap total context at 12000 chars (covers ~80 districts comfortably)
+    context_trimmed = context[:12000]
+    if len(context) > 12000:
+        context_trimmed += f"\n[...{len(context)-12000} chars truncated — {len(rows) if not rows.empty else 0} total districts in result]"
+
+    prompt  = f"{SYSTEM_PROMPT}\n\n---\nDATA:\n{context_trimmed}\n---\n\nQUESTION: {query}\n\nANSWER:"
     history = _conversations.get(request.session_id, []) if request.session_id else []
     answer  = await _call_gemini_async(prompt, history, timeout=25)
 
