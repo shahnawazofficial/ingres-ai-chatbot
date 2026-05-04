@@ -53,6 +53,7 @@ Thumbs.db
 # ── Data & Embeddings (large / generated files) ───────────────────────────────
 data/embeddings/
 data/raw/*.pdf
+*.xlsx
 *.db
 *.sqlite3
 *.sqlite

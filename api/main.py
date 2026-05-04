@@ -124,27 +124,51 @@ def _query_df(df: "pd.DataFrame", query: str) -> "pd.DataFrame":
     Fast pandas query routing — returns the most relevant rows for a query.
     Uses vectorized string operations (no .apply() row loop).
     """
-    q = query.lower()
+    q = query.lower().strip()
 
-    # 1. State/district keyword match (vectorized)
+    # ── State abbreviation expansion ────────────────────────────────────────
+    STATE_ABBR = {
+        " up ": "uttar pradesh", "^up$": "uttar pradesh", "up groundwater": "uttar pradesh",
+        " mp ": "madhya pradesh", "^mp$": "madhya pradesh",
+        " wb ": "west bengal",   "^wb$": "west bengal",
+        " ap ": "andhra pradesh","^ap$": "andhra pradesh",
+        " hp ": "himachal pradesh",
+        " jk ": "jammu kashmir",
+    }
+    import re as _re
+    for abbr, full in STATE_ABBR.items():
+        pattern = abbr if abbr.startswith("^") else abbr.strip()
+        if pattern in q or _re.search(abbr, q):
+            q = q.replace(pattern.strip(), full)
+
+    # 1. State match — return ALL districts for that state
     state_mask = df["state"].str.lower().str.contains(q, na=False, regex=False)
-    dist_mask  = df["district"].str.lower().str.contains(q, na=False, regex=False)
-    matched    = df[state_mask | dist_mask].head(12)
-    if not matched.empty:
-        return matched
+    if state_mask.any():
+        state_rows = df[state_mask]
+        # If we matched exactly one state, return all its districts
+        matched_states = state_rows["state"].unique()
+        if len(matched_states) <= 2:
+            return state_rows  # return ALL districts of matched state(s)
+        return state_rows.head(30)
 
-    # 2. Category keyword routing
-    if any(w in q for w in ("over-exploit","overexploit","critical","urgent","stress","worst","highest","dangerous")):
-        return df.nlargest(15, "stage_pct")[["state","district","stage_pct","category"]]
-    if any(w in q for w in ("safe","good","best","lowest","healthy")):
-        return df.nsmallest(15, "stage_pct")[["state","district","stage_pct","category"]]
-    if any(w in q for w in ("semi","moderate")):
-        return df[df["category"] == "Semi-Critical"].head(15)
-    if any(w in q for w in ("conservation","attention","urgent","improve")):
-        return df.nlargest(15, "stage_pct")[["state","district","stage_pct","category"]]
+    # 2. District match
+    dist_mask = df["district"].str.lower().str.contains(q, na=False, regex=False)
+    if dist_mask.any():
+        return df[dist_mask].head(12)
 
-    # 3. General question — representative mixed sample
-    return df.nlargest(20, "stage_pct")[["state","district","stage_pct","category"]]
+    # 3. Category keyword routing
+    if any(w in q for w in ("over-exploit", "overexploit", "critical", "urgent", "stress", "worst", "highest", "dangerous")):
+        return df.nlargest(20, "stage_pct")[["state", "district", "stage_pct", "category"]]
+    if any(w in q for w in ("safe", "good", "best", "lowest", "healthy")):
+        return df.nsmallest(20, "stage_pct")[["state", "district", "stage_pct", "category"]]
+    if any(w in q for w in ("semi", "moderate")):
+        return df[df["category"] == "Semi-Critical"].head(20)
+    if any(w in q for w in ("all state", "every state", "list state", "how many state")):
+        # Return one row per state (highest stage)
+        return df.sort_values("stage_pct", ascending=False).drop_duplicates("state")[["state", "district", "stage_pct", "category"]]
+
+    # 4. General question — top stressed districts across all states
+    return df.nlargest(25, "stage_pct")[["state", "district", "stage_pct", "category"]]
 
 # ── Cache ────────────────────────────────────────────────────────────────────
 def _cache_key(query: str) -> str:
@@ -269,12 +293,12 @@ Rules:
 5. End with a one-line Insight: summary."""
 
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
-MODELS      = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.0-flash-lite"]
+MODELS      = ["gemini-2.5-flash", "gemini-2.5-flash-lite"]  # verified working
 
-async def _call_gemini_async(prompt: str, history: list = None, timeout: int = 40) -> str:
-    """Async Gemini call — does NOT block the FastAPI event loop."""
+async def _call_gemini_async(prompt: str, history: list = None, timeout: int = 25) -> str:
+    """Async Gemini call — fail-fast strategy to avoid UI timeouts."""
     if not api_key:
-        raise HTTPException(503, "GEMINI_API_KEY not configured. Set it in Railway Variables.")
+        raise HTTPException(503, "GEMINI_API_KEY not configured.")
 
     contents = []
     if history:
@@ -284,13 +308,16 @@ async def _call_gemini_async(prompt: str, history: list = None, timeout: int = 4
 
     payload = {
         "contents": contents,
-        "generationConfig": {"temperature": 0.2, "topP": 0.9, "maxOutputTokens": 800},
+        "generationConfig": {"temperature": 0.2, "topP": 0.9, "maxOutputTokens": 600},
     }
 
+    # Try primary then fallback — both verified working
+    MODELS_FAST = ["gemini-2.5-flash", "gemini-2.5-flash-lite"]
     last_err = "unknown"
+
     async with httpx.AsyncClient(timeout=timeout) as client:
-        for model in MODELS:
-            for attempt in range(3):
+        for model in MODELS_FAST:
+            for attempt in range(2):
                 try:
                     url  = f"{GEMINI_BASE}/{model}:generateContent?key={api_key}"
                     resp = await client.post(url, json=payload,
@@ -298,31 +325,26 @@ async def _call_gemini_async(prompt: str, history: list = None, timeout: int = 4
                     if resp.status_code == 200:
                         log.info(f"Gemini OK [{model}] attempt={attempt+1}")
                         return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
-                    elif resp.status_code == 404:
-                        last_err = f"{model} not available"
-                        break
                     elif resp.status_code == 429:
-                        wait = min(int(resp.headers.get("Retry-After", 10 * (attempt + 1))), 30)
                         last_err = f"{model} rate-limited (429)"
-                        log.warning(f"{model} rate-limited — waiting {wait}s")
-                        await asyncio.sleep(wait)
-                    elif resp.status_code == 503:
-                        last_err = f"{model} overloaded"
-                        await asyncio.sleep(5 * (attempt + 1))
+                        log.warning(f"{model} rate-limited — short wait")
+                        await asyncio.sleep(3)   # Short wait only — don't block for 30s
                     elif resp.status_code in (400, 401, 403):
                         try:
                             err_msg = resp.json().get("error", {}).get("message", "")
                         except Exception:
                             err_msg = resp.text[:200]
-                        raise HTTPException(401, f"Gemini API key error: {err_msg}. "
-                                                 "Update GEMINI_API_KEY in Railway Variables.")
+                        raise HTTPException(401, f"Gemini API key error: {err_msg}.")
+                    elif resp.status_code == 404:
+                        last_err = f"{model} not available"
+                        break   # Try next model immediately
                     else:
                         last_err = f"{model} HTTP {resp.status_code}"
                         break
                 except httpx.TimeoutException:
                     last_err = f"{model} timed out"
                     log.warning(f"{model} timeout (attempt {attempt+1})")
-                    await asyncio.sleep(3)
+                    break   # Don't retry on timeout — try next model
                 except httpx.RequestError as e:
                     last_err = f"{model} connection error"
                     log.error(f"{model} request error: {e}")
@@ -330,8 +352,8 @@ async def _call_gemini_async(prompt: str, history: list = None, timeout: int = 4
 
     raise HTTPException(
         503,
-        f"All AI models unavailable. Last error: {last_err}. "
-        "Free tier: 5 req/min — wait 1 minute and try again."
+        f"AI service temporarily unavailable. Last error: {last_err}. "
+        "Free tier: 15 req/min — please wait a moment and try again."
     )
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
@@ -390,25 +412,39 @@ async def chat(request: ChatRequest):
                 processing_time=round(time.time()-t0, 3), cached=True
             )
 
-    # Build context — vectorized, fast
+    # Build context — CSV is ALWAYS the primary source (634 districts, all states)
+    # Vector store supplements only if it has valid district documents
     context, sources = "", []
+
+    # 1. Always query the structured CSV first (guaranteed to have all districts)
+    if df_gw is not None:
+        rows = _query_df(df_gw, query)
+        context = rows.to_string(index=False) if not rows.empty else "No matching records."
+
+    # 2. Optionally supplement with vector store (only if it has real district docs)
     if collection:
         try:
-            n   = min(request.n_results, collection.count())
+            n = min(request.n_results, collection.count())
             res = collection.query(query_texts=[query], n_results=n)
-            context = "\n\n".join(res.get("documents", [[]])[0])
-            sources = [m.get("source", "") for m in res.get("metadatas", [[]])[0]
-                       if isinstance(m, dict) and m.get("source")]
+            vec_docs = res.get("documents", [[]])[0]
+            vec_meta = res.get("metadatas", [[]])[0]
+            # Only use vector docs that look like real district entries (have 'state' in metadata)
+            valid_docs = [
+                doc for doc, meta in zip(vec_docs, vec_meta)
+                if isinstance(meta, dict) and meta.get("state")
+            ]
+            if valid_docs:
+                context = context + "\n\nADDITIONAL CONTEXT:\n" + "\n\n".join(valid_docs)
+                sources = [
+                    m.get("source", "") for m in vec_meta
+                    if isinstance(m, dict) and m.get("source")
+                ]
         except Exception as e:
             log.error(f"Vector search error: {e}")
 
-    if not context and df_gw is not None:
-        rows    = _query_df(df_gw, query)
-        context = rows.to_string(index=False) if not rows.empty else "No matching records."
-
-    prompt  = f"{SYSTEM_PROMPT}\n\n---\nDATA:\n{context}\n---\n\nQUESTION: {query}\n\nANSWER:"
+    prompt  = f"{SYSTEM_PROMPT}\n\n---\nDATA:\n{context[:6000]}\n---\n\nQUESTION: {query}\n\nANSWER:"
     history = _conversations.get(request.session_id, []) if request.session_id else []
-    answer  = await _call_gemini_async(prompt, history)
+    answer  = await _call_gemini_async(prompt, history, timeout=25)
 
     # Update conversation history
     if request.session_id:
