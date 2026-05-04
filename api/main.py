@@ -201,36 +201,94 @@ async def lifespan(app: FastAPI):
     else:
         log.warning("GEMINI_API_KEY not set — chat will fail")
 
-    # 2. ChromaDB (optional vector store)
-    if CHROMA_OK:
-        try:
-            client = chromadb.PersistentClient(
-                path=os.path.join(_project_root, "data", "embeddings")
-            )
-            collection = client.get_collection("groundwater_data")
-            log.info(f"Vector store loaded: {collection.count()} docs")
-        except Exception as e:
-            log.warning(f"Vector store unavailable: {e}")
-
-    # 3. Load pre-baked clean CSV (fast — simple pd.read_csv)
+    # 2. Load CSV — the single source of truth for ALL district data
     if PANDAS_OK:
         clean_csv = os.path.join(_project_root, "data", "processed", "groundwater_clean.csv")
         raw_csv   = os.path.join(_project_root, "data", "processed", "groundwater_data.csv")
+        csv_path  = clean_csv if os.path.exists(clean_csv) else raw_csv
 
-        csv_path = clean_csv if os.path.exists(clean_csv) else raw_csv
         if os.path.exists(csv_path):
             try:
                 df_gw = _load_df(csv_path)
                 _stats_cache = _build_stats(df_gw)
-                log.info(f"CSV loaded: {len(df_gw)} districts | used: {os.path.basename(csv_path)}")
+                log.info(
+                    f"CSV loaded: {len(df_gw)} districts | "
+                    f"{df_gw['state'].nunique()} states | {os.path.basename(csv_path)}"
+                )
             except Exception as e:
                 log.error(f"CSV load failed: {e}")
         else:
             log.warning("No CSV found — data endpoints disabled")
 
+    # 3. ChromaDB — auto-rebuild from CSV whenever stale or missing
+    if CHROMA_OK and df_gw is not None:
+        try:
+            emb_path = os.path.join(_project_root, "data", "embeddings")
+            os.makedirs(emb_path, exist_ok=True)
+            chroma_client = chromadb.PersistentClient(path=emb_path)
+
+            # Determine if a rebuild is needed
+            needs_rebuild = True
+            try:
+                collection = chroma_client.get_collection("groundwater_data")
+                count = collection.count()
+                # Valid only if ≥90% of our districts AND has proper 'state' metadata
+                if count >= int(len(df_gw) * 0.9):
+                    sample = collection.get(limit=5, include=["metadatas"])
+                    if any(isinstance(m, dict) and m.get("state") for m in sample.get("metadatas", [])):
+                        needs_rebuild = False
+                        log.info(f"Vector store OK: {count} docs")
+            except Exception:
+                pass  # Collection missing — will rebuild
+
+            if needs_rebuild:
+                log.info(f"Rebuilding vector store from CSV ({len(df_gw)} districts)…")
+                try:
+                    chroma_client.delete_collection("groundwater_data")
+                except Exception:
+                    pass
+
+                collection = chroma_client.create_collection(
+                    name="groundwater_data",
+                    metadata={"hnsw:space": "cosine"},
+                )
+                batch_docs, batch_ids, batch_metas = [], [], []
+                for _, row in df_gw.reset_index(drop=True).iterrows():
+                    state    = str(row["state"])
+                    district = str(row["district"])
+                    stage    = float(row["stage_pct"]) if pd.notna(row.get("stage_pct")) else 0.0
+                    cat      = str(row.get("category", ""))
+                    avail    = row.get("net_gw_availability_ham", "N/A")
+                    irrig    = row.get("net_gw_irrigation_ham", "N/A")
+                    doc_text = (
+                        f"State: {state}\nDistrict: {district}\n"
+                        f"Net GW Availability: {avail} ham\n"
+                        f"Net GW for Irrigation: {irrig} ham\n"
+                        f"Stage of GW Development: {stage}%\nCategory: {cat}\n"
+                        f"{district} in {state} has stage {stage}% — classified as '{cat}'."
+                    )
+                    doc_id = f"{state.lower().replace(' ','_')}_{district.lower().replace(' ','_')}"
+                    batch_docs.append(doc_text)
+                    batch_ids.append(doc_id)
+                    batch_metas.append({
+                        "state": state, "district": district,
+                        "stage": stage, "category": cat,
+                        "source": f"{state} - {district}",
+                    })
+                    if len(batch_docs) == 200:
+                        collection.add(documents=batch_docs, ids=batch_ids, metadatas=batch_metas)
+                        batch_docs, batch_ids, batch_metas = [], [], []
+                if batch_docs:
+                    collection.add(documents=batch_docs, ids=batch_ids, metadatas=batch_metas)
+                log.info(f"Vector store rebuilt: {collection.count()} docs")
+
+        except Exception as e:
+            log.warning(f"ChromaDB error: {e} — running CSV-only mode")
+
     log.info(f"Startup complete in {time.time()-t0:.2f}s")
     yield
     log.info("Shutting down.")
+
 
 # ── App ───────────────────────────────────────────────────────────────────────
 app = FastAPI(
