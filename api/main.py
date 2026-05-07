@@ -121,12 +121,14 @@ def _build_stats(df: "pd.DataFrame") -> Dict[str, Any]:
 
 def _query_df(df: "pd.DataFrame", query: str) -> "pd.DataFrame":
     """
-    Fast pandas query routing — returns the most relevant rows for a query.
-    Uses vectorized string operations (no .apply() row loop).
+    Fast pandas query routing - returns the most relevant rows for a query.
+    Scans the query for any known state/district names mentioned within it
+    (bidirectional matching - fixes sentence-length queries like
+    "Compare Bihar and Uttar Pradesh groundwater status").
     """
     q = query.lower().strip()
 
-    # ── State abbreviation expansion ────────────────────────────────────────
+    # -- State abbreviation expansion ----------------------------------------
     STATE_ABBR = {
         " up ": "uttar pradesh", "^up$": "uttar pradesh", "up groundwater": "uttar pradesh",
         " mp ": "madhya pradesh", "^mp$": "madhya pradesh",
@@ -141,22 +143,37 @@ def _query_df(df: "pd.DataFrame", query: str) -> "pd.DataFrame":
         if pattern in q or _re.search(abbr, q):
             q = q.replace(pattern.strip(), full)
 
-    # 1. State match — return ALL districts for that state
-    state_mask = df["state"].str.lower().str.contains(q, na=False, regex=False)
-    if state_mask.any():
-        state_rows = df[state_mask]
-        # If we matched exactly one state, return all its districts
-        matched_states = state_rows["state"].unique()
-        if len(matched_states) <= 2:
-            return state_rows  # return ALL districts of matched state(s)
-        return state_rows.head(30)
+    # 1. Scan query for any known state names mentioned WITHIN it.
+    #    e.g. "compare Bihar and Uttar Pradesh" -> ["bihar", "uttar pradesh"]
+    #    FIX: old code did str.contains(full_query) on state column - always 0
+    #         for sentence queries. Now we check query.contains(state_name).
+    all_states_lower = df["state"].str.lower().unique()
+    mentioned_states = [s for s in all_states_lower if s in q]
+    if mentioned_states:
+        state_mask = df["state"].str.lower().isin(mentioned_states)
+        return df[state_mask]   # ALL districts of every mentioned state
 
-    # 2. District match
-    dist_mask = df["district"].str.lower().str.contains(q, na=False, regex=False)
-    if dist_mask.any():
-        return df[dist_mask].head(12)
+    # 2. Short query only - also check if the query appears INSIDE a state name
+    #    (e.g. query="andhra" matches "Andhra Pradesh")
+    if len(q.split()) <= 3:
+        state_mask = df["state"].str.lower().str.contains(q, na=False, regex=False)
+        if state_mask.any():
+            return df[state_mask]
 
-    # 3. Category keyword routing
+    # 3. Scan query for any known district names mentioned within it
+    all_dists_lower = df["district"].str.lower().unique()
+    mentioned_dists = [d for d in all_dists_lower if d in q]
+    if mentioned_dists:
+        dist_mask = df["district"].str.lower().isin(mentioned_dists)
+        return df[dist_mask]
+
+    # 4. Short query - also check if query appears inside a district name
+    if len(q.split()) <= 3:
+        dist_mask = df["district"].str.lower().str.contains(q, na=False, regex=False)
+        if dist_mask.any():
+            return df[dist_mask].head(12)
+
+    # 5. Category keyword routing
     if any(w in q for w in ("over-exploit", "overexploit", "critical", "urgent", "stress", "worst", "highest", "dangerous")):
         return df.nlargest(20, "stage_pct")[["state", "district", "stage_pct", "category"]]
     if any(w in q for w in ("safe", "good", "best", "lowest", "healthy")):
@@ -164,11 +181,11 @@ def _query_df(df: "pd.DataFrame", query: str) -> "pd.DataFrame":
     if any(w in q for w in ("semi", "moderate")):
         return df[df["category"] == "Semi-Critical"].head(20)
     if any(w in q for w in ("all state", "every state", "list state", "how many state")):
-        # Return one row per state (highest stage)
         return df.sort_values("stage_pct", ascending=False).drop_duplicates("state")[["state", "district", "stage_pct", "category"]]
 
-    # 4. General question — top stressed districts across all states
+    # 6. Fallback - top 25 most stressed districts across all states
     return df.nlargest(25, "stage_pct")[["state", "district", "stage_pct", "category"]]
+
 
 # ── Cache ────────────────────────────────────────────────────────────────────
 def _cache_key(query: str) -> str:
