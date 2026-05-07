@@ -682,6 +682,13 @@ async def clear_history(session_id: str):
     _conversations.pop(session_id, None)
     return {"status": "cleared", "session_id": session_id}
 
+@app.post("/api/clear-cache", tags=["Meta"])
+async def clear_cache():
+    """Clear the in-memory response cache (use after deployments to avoid stale answers)."""
+    count = len(_response_cache)
+    _response_cache.clear()
+    return {"status": "cleared", "entries_removed": count}
+
 # ── Dev server ────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     import uvicorn
