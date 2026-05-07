@@ -207,42 +207,66 @@ async def lifespan(app: FastAPI):
         raw_csv   = os.path.join(_project_root, "data", "processed", "groundwater_data.csv")
         csv_path  = clean_csv if os.path.exists(clean_csv) else raw_csv
 
+        log.info(f"[STARTUP] project_root     = {_project_root}")
+        log.info(f"[STARTUP] clean_csv exists = {os.path.exists(clean_csv)}")
+        log.info(f"[STARTUP] raw_csv exists   = {os.path.exists(raw_csv)}")
+        log.info(f"[STARTUP] csv_path chosen  = {csv_path}")
+
         if os.path.exists(csv_path):
             try:
                 df_gw = _load_df(csv_path)
                 _stats_cache = _build_stats(df_gw)
+                up_csv = int(df_gw["state"].str.lower().str.contains("uttar pradesh", na=False).sum())
                 log.info(
-                    f"CSV loaded: {len(df_gw)} districts | "
+                    f"[STARTUP] CSV loaded OK: {len(df_gw)} districts | "
                     f"{df_gw['state'].nunique()} states | {os.path.basename(csv_path)}"
                 )
+                log.info(f"[STARTUP] Uttar Pradesh rows in CSV: {up_csv}")
+                log.info(f"[STARTUP] All states: {sorted(df_gw['state'].unique().tolist())}")
             except Exception as e:
-                log.error(f"CSV load failed: {e}")
+                log.error(f"[STARTUP] CSV load FAILED: {e}")
         else:
-            log.warning("No CSV found — data endpoints disabled")
+            log.warning(f"[STARTUP] No CSV found at {csv_path} — data endpoints disabled")
 
     # 3. ChromaDB — auto-rebuild from CSV whenever stale or missing
+    #    chroma.sqlite3 must be committed to git; if absent on Railway the
+    #    app self-heals by rebuilding from the CSV ground truth.
     if CHROMA_OK and df_gw is not None:
         try:
-            emb_path = os.path.join(_project_root, "data", "embeddings")
+            emb_path    = os.path.join(_project_root, "data", "embeddings")
+            sqlite_path = os.path.join(emb_path, "chroma.sqlite3")
             os.makedirs(emb_path, exist_ok=True)
+            log.info(f"[STARTUP] embeddings_path      = {emb_path}")
+            log.info(f"[STARTUP] chroma.sqlite3 found = {os.path.exists(sqlite_path)}")
+            if os.path.exists(sqlite_path):
+                log.info(f"[STARTUP] chroma.sqlite3 size   = {os.path.getsize(sqlite_path)//1024} KB")
+
             chroma_client = chromadb.PersistentClient(path=emb_path)
 
             # Determine if a rebuild is needed
-            needs_rebuild = True
+            needs_rebuild  = True
+            rebuild_reason = "initial"
             try:
                 collection = chroma_client.get_collection("groundwater_data")
                 count = collection.count()
-                # Valid only if ≥90% of our districts AND has proper 'state' metadata
-                if count >= int(len(df_gw) * 0.9):
+                log.info(f"[STARTUP] Existing collection count: {count}")
+                threshold = int(len(df_gw) * 0.9)
+                if count >= threshold:
                     sample = collection.get(limit=5, include=["metadatas"])
                     if any(isinstance(m, dict) and m.get("state") for m in sample.get("metadatas", [])):
-                        needs_rebuild = False
-                        log.info(f"Vector store OK: {count} docs")
-            except Exception:
-                pass  # Collection missing — will rebuild
+                        needs_rebuild  = False
+                        rebuild_reason = "not needed"
+                        log.info(f"[STARTUP] Vector store OK: {count} docs (threshold={threshold})")
+                    else:
+                        rebuild_reason = "metadata missing 'state' field"
+                else:
+                    rebuild_reason = f"count {count} < threshold {threshold}"
+            except Exception as ex:
+                rebuild_reason = f"collection not found ({ex})"
 
             if needs_rebuild:
-                log.info(f"Rebuilding vector store from CSV ({len(df_gw)} districts)…")
+                log.info(f"[STARTUP] Rebuilding vector store — reason: {rebuild_reason}")
+                log.info(f"[STARTUP] Building from {len(df_gw)} CSV rows…")
                 try:
                     chroma_client.delete_collection("groundwater_data")
                 except Exception:
@@ -280,10 +304,17 @@ async def lifespan(app: FastAPI):
                         batch_docs, batch_ids, batch_metas = [], [], []
                 if batch_docs:
                     collection.add(documents=batch_docs, ids=batch_ids, metadatas=batch_metas)
-                log.info(f"Vector store rebuilt: {collection.count()} docs")
+                final_count = collection.count()
+                log.info(f"[STARTUP] Vector store rebuilt: {final_count} docs")
+                try:
+                    up_vec = collection.get(where={"state": "Uttar Pradesh"}, include=["metadatas"])
+                    log.info(f"[STARTUP] UP docs in vector store: {len(up_vec.get('ids', []))}")
+                except Exception as uex:
+                    log.warning(f"[STARTUP] Could not verify UP in vector store: {uex}")
 
         except Exception as e:
-            log.warning(f"ChromaDB error: {e} — running CSV-only mode")
+            log.warning(f"[STARTUP] ChromaDB error: {e} — running CSV-only mode")
+            collection = None
 
     log.info(f"Startup complete in {time.time()-t0:.2f}s")
     yield
@@ -451,6 +482,72 @@ async def debug():
         "python_version":      platform.python_version(),
         "env_port":            os.getenv("PORT", "not set (local)"),
         "web_dir_exists":      os.path.isdir(os.path.join(_project_root, "web")),
+    }
+
+@app.get("/api/debug-state", tags=["Meta"])
+async def debug_state():
+    """Full Railway diagnostic endpoint — use this to verify deployment data."""
+    import platform
+    emb_path   = os.path.join(_project_root, "data", "embeddings")
+    sqlite_path = os.path.join(emb_path, "chroma.sqlite3")
+    processed_path = os.path.join(_project_root, "data", "processed")
+
+    # Processed file inventory
+    proc_files = []
+    if os.path.isdir(processed_path):
+        for f in os.listdir(processed_path):
+            fp = os.path.join(processed_path, f)
+            proc_files.append({"name": f, "size_kb": round(os.path.getsize(fp) / 1024, 1)})
+
+    # Embeddings file inventory
+    emb_files = []
+    if os.path.isdir(emb_path):
+        for root_dir, dirs, files in os.walk(emb_path):
+            for f in files:
+                fp = os.path.join(root_dir, f)
+                rel = os.path.relpath(fp, emb_path)
+                emb_files.append({"path": rel, "size_kb": round(os.path.getsize(fp) / 1024, 1)})
+
+    # UP-specific CSV check
+    up_csv_count = 0
+    up_vec_count = 0
+    all_csv_states: list = []
+    all_vec_states: list = []
+    if df_gw is not None:
+        up_mask = df_gw["state"].str.lower().str.contains("uttar pradesh", na=False)
+        up_csv_count = int(up_mask.sum())
+        all_csv_states = sorted(df_gw["state"].unique().tolist())
+    if collection:
+        try:
+            up_res = collection.get(where={"state": "Uttar Pradesh"}, include=["metadatas"])
+            up_vec_count = len(up_res.get("ids", []))
+        except Exception:
+            pass
+        try:
+            all_meta = collection.get(include=["metadatas"])
+            all_vec_states = sorted(set(
+                m.get("state", "?") for m in all_meta.get("metadatas", [])
+                if isinstance(m, dict)
+            ))
+        except Exception:
+            pass
+
+    return {
+        "environment":           os.getenv("RAILWAY_ENVIRONMENT", "local"),
+        "python_version":        platform.python_version(),
+        "project_root":          _project_root,
+        "chroma_sqlite3_exists": os.path.exists(sqlite_path),
+        "chroma_sqlite3_kb":     round(os.path.getsize(sqlite_path) / 1024, 1) if os.path.exists(sqlite_path) else 0,
+        "csv_loaded":            df_gw is not None,
+        "csv_total_rows":        len(df_gw) if df_gw is not None else 0,
+        "csv_total_states":      len(all_csv_states),
+        "csv_UP_rows":           up_csv_count,
+        "csv_states":            all_csv_states,
+        "vector_store_docs":     collection.count() if collection else 0,
+        "vector_store_UP_docs":  up_vec_count,
+        "vector_store_states":   all_vec_states,
+        "processed_files":       proc_files,
+        "embeddings_files":      emb_files,
     }
 
 @app.post("/chat", response_model=ChatResponse, tags=["Chat"])
